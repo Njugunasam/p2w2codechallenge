@@ -4,6 +4,11 @@ import BotArmy from './BotArmy';
 const BotCollection = () => {
   const [bots, setBots] = useState([]);
   const [enlistedBots, setEnlistedBots] = useState([]);
+  //handle releasing 
+  const releaseBot = (bot) => {
+    setEnlistedBots(enlistedBots.filter(eb => eb.id !== bot.id));
+  };
+
 
   useEffect(() => {
     fetch('http://localhost:3000/bots')
