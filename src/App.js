@@ -1,25 +1,29 @@
-import './App.css';
-import React, { useState, useEffect } from "react";
-import BotSpecs from './BotSpecs';
-import BotArmy from './BotArmy'; 
+import React, { useState, useEffect } from 'react';
 
-function App() {
+const BotCollection = () => {
   const [bots, setBots] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/bots") 
+    fetch('http://localhost:3000/bots')
       .then(response => response.json())
-      .then(data => setBots(data))
-      .catch(error => console.error('Error fetching data:', error));
+      .then(data => setBots(data));
   }, []);
 
   return (
-    <div className="App">
-      <h1>Bot Collection</h1>
-      <BotSpecs />
-      <BotArmy bots={bots} />
+    <div>
+      <h2>Bot Collection</h2>
+      <ul>
+        {bots.map(bot => (
+          <li key={bot.id}>
+            <h3>{bot.name}</h3>
+            <p>Health: {bot.health}</p>
+            <p>Damage: {bot.damage}</p>
+            <p>Armor: {bot.armor}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
-export default App;
+export default BotCollection;
