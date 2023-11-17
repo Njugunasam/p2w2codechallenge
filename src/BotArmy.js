@@ -1,14 +1,16 @@
 import React from 'react';
 
-const BotArmy = ({ enlistedBots, releaseBot }) => {
+const BotArmy = ({ bots }) => {
+  if (!bots) {
+    return <p>No enlisted bots available.</p>;
+  }
+
   return (
     <div>
       <h2>Your Bot Army</h2>
       <ul>
-        {enlistedBots.map(bot => (
-          <li key={bot.id}>
-            {bot.name} <button onClick={() => releaseBot(bot)}>Release</button>
-          </li>
+        {bots.map(bot => (
+          <li key={bot.id}>{bot.name}</li>
         ))}
       </ul>
     </div>
