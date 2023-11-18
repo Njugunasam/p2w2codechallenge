@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import BotArmy from './BotArmy';
+import './App.css';
 
 const BotCollection = () => {
   const [bots, setBots] = useState([]);
   const [enlistedBots, setEnlistedBots] = useState([]);
-  //handle releasing 
-  const releaseBot = (bot) => {
-    setEnlistedBots(enlistedBots.filter(eb => eb.id !== bot.id));
-  };
-
 
   useEffect(() => {
     fetch('http://localhost:3000/bots')
@@ -17,26 +13,30 @@ const BotCollection = () => {
   }, []);
 
   const enlistBot = (bot) => {
-    // enlisting functionality
     if (!enlistedBots.find(enlistedBot => enlistedBot.id === bot.id)) {
       setEnlistedBots([...enlistedBots, bot]);
     }
   };
 
+  const releaseBot = (bot) => {
+    setEnlistedBots(enlistedBots.filter(eb => eb.id !== bot.id));
+  };
+
   return (
     <div>
-      <h2>Bot Collection</h2>
-      <ul>
+      <BotArmy bots={enlistedBots} enlistBot={enlistBot} releaseBot={releaseBot} />
+      <ul className="bot-container">
         {bots.map(bot => (
-          <li key={bot.id} onClick={() => enlistBot(bot)}>
-            <h3>{bot.name}</h3>
-            <p>Health: {bot.health}</p>
-            <p>Damage: {bot.damage}</p>
-            <p>Armor: {bot.armor}</p>
+          <li key={bot.id}>
+            <div className="bot-card" onClick={() => enlistBot(bot)}>
+              <p>Health: {bot.health}</p>
+              <p>Damage: {bot.damage}</p>
+              <p>Armor: {bot.armor}</p>
+              <img className="bot-avatar" src={bot.avatar_url} alt={`${bot.name} Avatar`} />
+            </div>
           </li>
         ))}
       </ul>
-      <BotArmy bots={enlistedBots} />
     </div>
   );
 };
