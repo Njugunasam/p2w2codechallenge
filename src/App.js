@@ -7,7 +7,7 @@ const BotCollection = () => {
   const [enlistedBots, setEnlistedBots] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/bots')
+    fetch('https://my-json-server.typicode.com/Njugunasam/p2w2codechallenge/bots')
       .then(response => response.json())
       .then(data => setBots(data));
   }, []);
